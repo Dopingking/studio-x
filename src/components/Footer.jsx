@@ -2,7 +2,7 @@ import { FaInstagram, FaFacebook, FaWhatsapp } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="bg-black text-gray-400 pt-20 pb-10 px-6 md:px-12 border-t border-white/10">
+    <footer className="bg-black  text-gray-400 pt-20 pb-10 px-6 md:px-12 border-t border-white/10">
 
       <div className="max-w-7xl mx-auto grid gap-12 md:grid-cols-4">
 
