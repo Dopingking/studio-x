@@ -9,7 +9,7 @@ export default function Footer() {
         {/* Brand */}
         <div>
           <h2 className="text-white text-2xl tracking-widest mb-4 cursor-pointer">
-            STUDIOX
+            SDK Studio
           </h2>
           <p className="text-sm leading-relaxed">
             Luxury photography studio capturing timeless moments with elegance and precision.
@@ -90,7 +90,7 @@ export default function Footer() {
 
       {/* Bottom */}
       <div className="text-center mt-12 text-xs text-gray-500 border-t border-white/10 pt-6">
-        © {new Date().getFullYear()} StudioX Photography. All rights reserved.
+        © {new Date().getFullYear()} SDK Studio Photography. All rights reserved.
       </div>
     </footer>
   );

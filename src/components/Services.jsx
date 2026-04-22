@@ -33,7 +33,7 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="bg-black text-white py-24 px-6 md:px-12"
+      className="bg-[#0a0a0a] text-white py-24 px-6 md:px-12 border-t border-white/10"
     >
       {/* Heading */}
       <div className="text-center max-w-2xl mx-auto mb-16">

@@ -46,7 +46,6 @@ export default function Gallery() {
       ? images
       : images.filter((img) => img.category === activeCategory);
 
-  // Auto slideshow
   useEffect(() => {
     if (selected === null) return;
 
@@ -77,7 +76,10 @@ export default function Gallery() {
   };
 
   return (
-    <section id="portfolio" className="bg-black text-white py-24 px-6 md:px-12">
+    <section
+      id="portfolio"
+      className="bg-[#111111] text-white py-24 px-6 md:px-12 border-t border-white/10"
+    >
 
       {/* Heading */}
       <div className="text-center mb-12">
@@ -142,7 +144,6 @@ export default function Gallery() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            {/* Close */}
             <button
               className="absolute top-6 right-6 text-white text-2xl"
               onClick={() => setSelected(null)}
@@ -150,7 +151,6 @@ export default function Gallery() {
               ✕
             </button>
 
-            {/* Prev */}
             <button
               className="absolute left-6 text-3xl"
               onClick={prevImage}
@@ -158,7 +158,6 @@ export default function Gallery() {
               ‹
             </button>
 
-            {/* Image */}
             <motion.img
               key={currentIndex}
               src={filteredImages[currentIndex].src}
@@ -168,7 +167,6 @@ export default function Gallery() {
               className="max-h-[80%] rounded-xl shadow-2xl"
             />
 
-            {/* Next */}
             <button
               className="absolute right-6 text-3xl"
               onClick={nextImage}

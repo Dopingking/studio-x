@@ -58,39 +58,42 @@ export default function Navbar() {
           <li><a href="#about" className="hover:text-gray-300">About</a></li>
 
           {/* SERVICES */}
-          <li className="relative">
-            <button
-              onClick={() => setServicesOpen(!servicesOpen)}
-              className="flex items-center gap-1 uppercase hover:text-gray-300"
-            >
-              Services
-              <FiChevronDown
-                className={`transition-transform ${servicesOpen ? "rotate-180" : ""}`}
-              />
-            </button>
+        <li
+  className="relative"
+  onMouseEnter={() => setServicesOpen(true)}
+  onMouseLeave={() => setServicesOpen(false)}
+>
+  <button className="flex items-center gap-1 uppercase hover:text-gray-300">
+    Services
+    <FiChevronDown
+      className={`transition-transform ${
+        servicesOpen ? "rotate-180" : ""
+      }`}
+    />
+  </button>
 
-            <AnimatePresence>
-              {servicesOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  className="absolute top-10 left-0 bg-black/95 border border-white/10 rounded-lg w-56 py-3"
-                >
-                  {services.map((item, i) => (
-                    <a
-                      key={i}
-                      href="#services"
-                      className="block px-4 py-2 text-sm hover:bg-white hover:text-black"
-                      onClick={() => setServicesOpen(false)}
-                    >
-                      {item}
-                    </a>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </li>
+  <AnimatePresence>
+    {servicesOpen && (
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 10 }}
+        className="absolute top-10 left-0 bg-black/95 border border-white/10 rounded-lg w-56 py-3"
+      >
+        {services.map((item, i) => (
+          <a
+            key={i}
+            href="#services"
+            className="block px-4 py-2 text-sm hover:bg-white hover:text-black"
+            onClick={() => setServicesOpen(false)}
+          >
+            {item}
+          </a>
+        ))}
+      </motion.div>
+    )}
+  </AnimatePresence>
+</li>
 
           <li><a href="#portfolio" className="hover:text-gray-300">Portfolio</a></li>
           <li><a href="#product" className="hover:text-gray-300">Product</a></li>
