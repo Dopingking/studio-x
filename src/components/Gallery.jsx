@@ -1,181 +1,342 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
 
-const images = [
+/* ------------------ DATA ------------------ */
+const categories = [
   {
-    src: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e",
-    title: "Elegant Portrait",
-    category: "Portrait",
+    name: "Portraits",
+    cover: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e",
+    projects: [
+      {
+        name: "Koko Project",
+        images: [
+          "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e",
+          "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce",
+        ],
+      },
+      {
+        name: "Ife Project",
+        images: [
+          "https://images.unsplash.com/photo-1544005313-94ddf0286df2",
+        ],
+      },
+    ],
   },
+
   {
-    src: "https://images.unsplash.com/photo-1519741497674-611481863552",
-    title: "Wedding Bliss",
-    category: "Wedding",
+    name: "Events",
+    cover: "https://images.unsplash.com/photo-1519741497674-611481863552",
+    projects: [
+      {
+        name: "Birthday",
+        sub: [
+          {
+            name: "Koko Project",
+            images: [
+              "https://images.unsplash.com/photo-1530103862676-de8c9debad1d",
+            ],
+          },
+          {
+            name: "SD Project",
+            images: [
+              "https://images.unsplash.com/photo-1527529482837-4698179dc6ce",
+            ],
+          },
+        ],
+      },
+      {
+        name: "Wedding",
+        sub: [
+          {
+            name: "Wedding A",
+            images: [
+              "https://images.unsplash.com/photo-1519741497674-611481863552",
+            ],
+          },
+        ],
+      },
+      {
+        name: "Burial",
+        sub: [
+          {
+            name: "Burial A",
+            images: [
+              "https://images.unsplash.com/photo-1504198453319-5ce911bafcde",
+            ],
+          },
+        ],
+      },
+    ],
   },
+
   {
-    src: "https://images.unsplash.com/photo-1492724441997-5dc865305da7",
-    title: "Urban Story",
-    category: "Lifestyle",
+    name: "Documentary",
+    cover: "https://images.unsplash.com/photo-1492724441997-5dc865305da7",
+    projects: [
+      {
+        name: "DCL Project",
+        images: [
+          "https://images.unsplash.com/photo-1492724441997-5dc865305da7",
+        ],
+      },
+      {
+        name: "Ife",
+        images: [
+          "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429",
+        ],
+      },
+      {
+        name: "SDK",
+        images: [
+          "https://images.unsplash.com/photo-1472214103451-9374bd1c798e",
+        ],
+      },
+    ],
   },
+
   {
-    src: "https://images.unsplash.com/photo-1504198453319-5ce911bafcde",
-    title: "Golden Hour",
-    category: "Outdoor",
+    name: "Product",
+    cover: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429",
+    projects: [
+      {
+        name: "Nuban",
+        images: [
+          "https://images.unsplash.com/photo-1585386959984-a4155224a1ad",
+        ],
+      },
+      {
+        name: "IMC",
+        images: [
+          "https://images.unsplash.com/photo-1600180758890-6c43f04b8f4f",
+        ],
+      },
+    ],
   },
+
   {
-    src: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429",
-    title: "Nature Frame",
-    category: "Nature",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e",
-    title: "Adventure Shot",
-    category: "Travel",
+    name: "Campaign",
+    cover: "https://images.unsplash.com/photo-1504198453319-5ce911bafcde",
+    projects: [
+      {
+        name: "Shina Peter",
+        images: [
+          "https://images.unsplash.com/photo-1504198453319-5ce911bafcde",
+        ],
+      },
+    ],
   },
 ];
 
-const categories = ["All", "Wedding", "Portrait", "Lifestyle", "Outdoor"];
+const videos = [
+  {
+    id: 1,
+    title: "Wedding Highlight",
+    thumbnail: "https://images.unsplash.com/photo-1519741497674-611481863552",
+    videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
+  },
+];
 
+/* ------------------ COMPONENT ------------------ */
 export default function Gallery() {
-  const [selected, setSelected] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [activeCategory, setActiveCategory] = useState("All");
+  const [activeTab, setActiveTab] = useState("photo");
 
-  const filteredImages =
-    activeCategory === "All"
-      ? images
-      : images.filter((img) => img.category === activeCategory);
+  const [activeCategory, setActiveCategory] = useState(null);
+  const [activeProject, setActiveProject] = useState(null);
+  const [activeSub, setActiveSub] = useState(null);
 
-  useEffect(() => {
-    if (selected === null) return;
-
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) =>
-        prev === filteredImages.length - 1 ? 0 : prev + 1
-      );
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [selected, filteredImages.length]);
-
-  const openImage = (img, index) => {
-    setSelected(img);
-    setCurrentIndex(index);
-  };
-
-  const nextImage = () => {
-    setCurrentIndex((prev) =>
-      prev === filteredImages.length - 1 ? 0 : prev + 1
-    );
-  };
-
-  const prevImage = () => {
-    setCurrentIndex((prev) =>
-      prev === 0 ? filteredImages.length - 1 : prev - 1
-    );
-  };
+  const [selectedVideo, setSelectedVideo] = useState(null);
 
   return (
-    <section
-      id="portfolio"
-      className="bg-[#111111] text-white py-24 px-6 md:px-12 border-t border-white/10"
-    >
+    <section className="bg-[#111111] text-white py-24 px-6 md:px-12 border-t border-white/10">
 
-      {/* Heading */}
+      {/* HEADING */}
       <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-5xl font-light">Our Portfolio</h2>
-        <p className="text-gray-400 mt-3">
+        <h2 className="text-3xl md:text-5xl font-light tracking-wide">
+          Portfolio
+        </h2>
+        <p className="text-gray-400 mt-4 text-sm md:text-base">
           Explore our work across different styles and moments.
         </p>
       </div>
 
-      {/* Filters */}
-      <div className="flex justify-center flex-wrap gap-4 mb-10">
-        {categories.map((cat, i) => (
+      {/* TOGGLE */}
+      <div className="flex justify-center mb-12">
+        <div className="bg-white/10 rounded-full p-1 inline-flex">
           <button
-            key={i}
-            onClick={() => setActiveCategory(cat)}
-            className={`px-4 py-2 text-sm border ${
-              activeCategory === cat
-                ? "bg-white text-black"
-                : "border-white text-white"
-            } transition`}
+            onClick={() => {
+              setActiveTab("photo");
+              setActiveCategory(null);
+              setActiveProject(null);
+              setActiveSub(null);
+            }}
+            className={`px-6 py-2 rounded-full text-sm ${
+              activeTab === "photo" ? "bg-white text-black" : "text-white"
+            }`}
           >
-            {cat}
+            Photo
           </button>
-        ))}
-      </div>
 
-      {/* Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-7xl mx-auto">
-        <AnimatePresence>
-          {filteredImages.map((img, i) => (
-            <motion.div
-              key={img.src}
-              layout
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0 }}
-              whileHover={{ scale: 1.03 }}
-              className="relative group cursor-pointer overflow-hidden rounded-xl"
-              onClick={() => openImage(img, i)}
-            >
-              <img
-                src={img.src}
-                className="w-full h-60 md:h-80 object-cover group-hover:scale-110 transition duration-500"
-              />
-
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex flex-col justify-end p-4">
-                <h3 className="text-sm">{img.title}</h3>
-                <p className="text-xs text-gray-300">{img.category}</p>
-              </div>
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </div>
-
-      {/* Lightbox */}
-      <AnimatePresence>
-        {selected && (
-          <motion.div
-            className="fixed inset-0 bg-black/95 flex items-center justify-center z-50"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+          <button
+            onClick={() => setActiveTab("video")}
+            className={`px-6 py-2 rounded-full text-sm ${
+              activeTab === "video" ? "bg-white text-black" : "text-white"
+            }`}
           >
-            <button
-              className="absolute top-6 right-6 text-white text-2xl"
-              onClick={() => setSelected(null)}
-            >
-              ✕
-            </button>
+            Videos
+          </button>
+        </div>
+      </div>
 
-            <button
-              className="absolute left-6 text-3xl"
-              onClick={prevImage}
-            >
-              ‹
-            </button>
+      {/* ================= PHOTO ================= */}
+      {activeTab === "photo" && (
+        <>
+          {/* LEVEL 1 */}
+          {!activeCategory && (
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-7xl mx-auto">
+              {categories.map((cat, i) => (
+                <div
+                  key={i}
+                  onClick={() => setActiveCategory(cat)}
+                  className="relative cursor-pointer rounded-xl overflow-hidden"
+                >
+                  <img src={cat.cover} className="h-60 md:h-72 w-full object-cover" />
+                  <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                    <h3 className="text-xl font-light">{cat.name}</h3>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
 
-            <motion.img
-              key={currentIndex}
-              src={filteredImages[currentIndex].src}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0 }}
-              className="max-h-[80%] rounded-xl shadow-2xl"
+          {/* LEVEL 2 */}
+          {activeCategory && !activeProject && (
+            <div className="max-w-6xl mx-auto">
+              <button onClick={() => setActiveCategory(null)} className="mb-6 text-gray-400">
+                ← Back
+              </button>
+
+              <h3 className="text-2xl mb-6">{activeCategory.name}</h3>
+
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {activeCategory.projects.map((proj, i) => (
+                  <div
+                    key={i}
+                    onClick={() => setActiveProject(proj)}
+                    className="relative cursor-pointer rounded-xl overflow-hidden"
+                  >
+                    <img
+                      src={
+                        proj.images?.[0] ||
+                        proj.sub?.[0]?.images?.[0]
+                      }
+                      className="h-60 md:h-72 w-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                      <h3 className="text-lg font-light">{proj.name}</h3>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* LEVEL 3 */}
+          {activeProject && !activeSub && (
+            <div className="max-w-6xl mx-auto">
+              <button onClick={() => setActiveProject(null)} className="mb-6 text-gray-400">
+                ← Back
+              </button>
+
+              <h3 className="text-2xl mb-6">{activeProject.name}</h3>
+
+              {activeProject.sub ? (
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {activeProject.sub.map((s, i) => (
+                    <div
+                      key={i}
+                      onClick={() => setActiveSub(s)}
+                      className="relative cursor-pointer rounded-xl overflow-hidden"
+                    >
+                      <img
+                        src={s.images[0]}
+                        className="h-60 md:h-72 w-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                        <h3 className="text-lg">{s.name}</h3>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {activeProject.images.map((img, i) => (
+                    <img
+                      key={i}
+                      src={img}
+                      className="h-60 md:h-72 w-full object-cover rounded-xl"
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* LEVEL 4 */}
+          {activeSub && (
+            <div className="max-w-6xl mx-auto">
+              <button onClick={() => setActiveSub(null)} className="mb-6 text-gray-400">
+                ← Back
+              </button>
+
+              <h3 className="text-2xl mb-6">{activeSub.name}</h3>
+
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {activeSub.images.map((img, i) => (
+                  <img
+                    key={i}
+                    src={img}
+                    className="h-60 md:h-72 w-full object-cover rounded-xl"
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+        </>
+      )}
+
+      {/* ================= VIDEO ================= */}
+      {activeTab === "video" && (
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-7xl mx-auto">
+          {videos.map((video) => (
+            <div
+              key={video.id}
+              onClick={() => setSelectedVideo(video)}
+              className="relative cursor-pointer rounded-xl overflow-hidden"
+            >
+              <img src={video.thumbnail} className="h-60 md:h-72 w-full object-cover" />
+              <div className="absolute inset-0 bg-black/70 flex items-center justify-center text-xl">
+                ▶
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* VIDEO MODAL */}
+      {selectedVideo && (
+        <div
+          className="fixed inset-0 bg-black/95 flex items-center justify-center z-50"
+          onClick={() => setSelectedVideo(null)}
+        >
+          <div className="w-full max-w-4xl">
+            <video
+              src={selectedVideo.videoUrl}
+              controls
+              autoPlay
+              className="w-full rounded-xl"
             />
-
-            <button
-              className="absolute right-6 text-3xl"
-              onClick={nextImage}
-            >
-              ›
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </div>
+      )}
 
     </section>
   );
