@@ -5,6 +5,7 @@ import Gallery from "../components/Gallery";
 import WhatsAppFloat from "../components/WhatsAppFloat";
 import Footer from "../components/Footer";
 import HeroContent from "../components/HeroContent";
+import ServiceList  from "../components/ServiceList"
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       <Hero />
       <HeroContent />
       <Services />
+      <ServiceList />
       <Gallery />
       <WhatsAppFloat />
       <Footer />
